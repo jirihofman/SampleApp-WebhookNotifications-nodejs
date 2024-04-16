@@ -18,7 +18,7 @@ var csrf = new Tokens();
 app.use(express.static(path.join(__dirname, '')))
 app.set('views', path.join(__dirname, 'views'))
 var exphbs = require('express-handlebars');
-var hbs = exphbs.create({});
+var hbs = exphbs.create({ defaultLayout: false });
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.use(session({secret: 'secret', resave: 'false', saveUninitialized: 'false'}))
