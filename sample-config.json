@@ -1,7 +1,7 @@
 {
   "clientId": "Enter ClientID",
   "clientSecret": "Enter ClientSecret",
-  "redirectUri": "https://quagga-fooo-bar.ngrok-free.app/callback",            // ex https://433b4c13.ngrok.io/callback
+  "redirectUri": "https://quagga-fooo-bar.ngrok-free.app/callback",
   "configurationEndpoint": "https://developer.api.intuit.com/.well-known/openid_sandbox_configuration/",
   "authorization_endpoint":"https://appcenter.intuit.com/connect/oauth2",
   "token_endpoint":"https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer",
@@ -27,6 +27,6 @@
       "address"
     ]
   },
-  "webhookUri": "https://quagga-fooo-bar.ngrok-free.app/webhooks",
+  "webhookUri": "https://quagga-fooo-bar.ngrok-free.app/webhook",
   "webhooksVerifier": "caff6233c-fooo-barr-bazz-75d535753168"
 }
