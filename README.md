@@ -1,10 +1,7 @@
-[![Rate your Sample](views/Ratesample.png)][ss1][![Yes](views/Thumbup.png)][ss2][![No](views/Thumbdown.png)][ss3]
-
+![Rate your Sample](./views/Callout.png)
 
 Intuit-WebhookNotifications-Demo in Javascript with Express
 ==========================================================
-[![Rate Me](https://img.shields.io/badge/Rate%20Me-Intuit%20Feedback-brightgreen.svg)](https://13b662a8.ngrok.io)
-
 
 ## Overview
 
@@ -96,9 +93,3 @@ https://755c8b38.ngrok.io/
 Then click the <input type="button" value="Login (OAuth2.0)"> button to authorize the demo app and view the access token.
 
 Events are logged to the Node.js console.
-
-![APP screenshots](views/app.png)
-
-[ss1]: #
-[ss2]: https://customersurveys.intuit.com/jfe/form/SV_9LWgJBcyy3NAwHc?check=Yes&checkpoint=SampleApp-WebhookNotifications-nodejs&pageUrl=github
-[ss3]: https://customersurveys.intuit.com/jfe/form/SV_9LWgJBcyy3NAwHc?check=No&checkpoint=SampleApp-WebhookNotifications-nodejs&pageUrl=github
