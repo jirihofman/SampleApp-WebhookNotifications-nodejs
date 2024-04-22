@@ -1,5 +1,4 @@
 require('dotenv').config();
-var https = require('https');
 var express = require('express');
 var session = require('express-session');
 var request = require('request');
@@ -27,7 +26,9 @@ app.use(session({secret: 'secret', resave: 'false', saveUninitialized: 'false'})
 Create body parsers for application/json and application/x-www-form-urlencoded
  */
 var bodyParser = require('body-parser')
-app.use(bodyParser.json())
+// Xero hack
+app.use('/webhook-xero', bodyParser.raw({ type: 'application/json' }));
+app.use(bodyParser.json()) // usual json for the rest
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 /*
@@ -191,6 +192,46 @@ app.post('/webhook', function(req, res) {
         return res.status(200).send('SUCCESS');
     }
     return res.status(401).send('FORBIDDEN');
+});
+
+// Also see https://pipedream.com/apps/xero-accounting-api/integrations/dexatel/create-contact-with-dexatel-api-on-webhook-event-received-instant-from-xero-accounting-api-int_LMsDZV6e
+// Workaround - https://stackoverflow.com/questions/72714521/xero-webhooks-with-node-red-ok-than-not-ok
+// https://stackoverflow.com/questions/65735356/xero-api-webhook-server-using-python-and-azure-functions
+app.post('/webhook-xero', function(req, res) {
+
+    // request is application/json; charset=utf-8
+    console.log('req.body', req.body.toString());
+    const webhookPayload = JSON.stringify(req.body);
+    console.log('\n\nThe paylopad is:', webhookPayload);
+    const signature = req.get('x-xero-signature');
+    console.log('The signature is:', signature);
+    console.log('The time is:', new Date().toISOString());
+
+    // if signature is empty return 401
+    if (!signature) {
+        return res.status(401).send('');
+    }
+
+    // if payload is empty, don't do anything
+    if (!webhookPayload) {
+        return res.status(200).send(undefined);
+    }
+
+    /**
+     * If the payload is hashed using HMACSHA256 with your webhook signing key and base64 encoded, it should match the signature in the header. This is a correctly signed payload. If the signature does not match the hashed payload it is an incorrectly signed payload.
+     */
+    console.log(`crypto.createHmac('sha256', '${config.webhooksVerifierXero}').update('${req.body.toString()}').digest('base64');`)
+    const hash = crypto.createHmac('sha256', config.webhooksVerifierXero).update(req.body.toString()).digest('base64');
+    if (signature === hash) {
+        console.log("✅ The Webhook notification payload is :" + req.body.toString());
+
+        return res.status(200).send('');
+    } else {
+        console.log('❌ The signature is not valid with:', config.webhooksVerifierXero);
+        console.log(signature);
+        console.log(hash);
+    }
+    return res.status(401).send('');
 });
 
 app.post('/createCustomer', urlencodedParser, function(req, res) {

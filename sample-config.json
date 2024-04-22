@@ -28,5 +28,6 @@
     ]
   },
   "webhookUri": "https://quagga-fooo-bar.ngrok-free.app/webhook",
-  "webhooksVerifier": "caff6233c-fooo-barr-bazz-75d535753168"
+  "webhooksVerifier": "caff6233c-fooo-barr-bazz-75d535753168",
+  "webhooksVerifierXero": "FOOBAR"
 }
